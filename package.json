@@ -1,0 +1,17 @@
+{
+  "name": "task-management-system",
+  "version": "1.0.0",
+  "description": "Task Management System for Al-Murooj Dairy",
+  "main": "server.js",
+  "scripts": {
+    "start": "cross-env NODE_DEBUG=* node server.js",
+    "dev": "cross-env NODE_DEBUG=* nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

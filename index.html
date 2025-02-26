@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System - Al-Murooj Dairy</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-logo">
+                <img src="images/almorooj-logo.png" 
+                     alt="Al-Murooj Dairy Logo"
+                     onerror="this.onerror=null; this.src='images/placeholder-logo.png';">
+            </div>
+            <h2>Task Management System</h2>
+            <div class="login-form">
+                <input type="text" id="username" placeholder="Username" autocomplete="off">
+                <input type="password" id="password" placeholder="Password">
+                <button id="loginBtn">Login</button>
+            </div>
+            <div class="login-footer">
+                Al-Murooj Dairy Maintenance Department
+            </div>
+        </div>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+        <!-- Add error message display -->
+        <div id="errorMessage" style="display:none; background: #ff4444; color: white; padding: 10px; text-align: center;">
+            System Error - Please check console for details
+        </div>
+
+        <header>
+            <div class="logo">
+                <a href="http://localhost:3000" target="_blank" class="logo-link">
+                    <img src="images/almorooj-logo.png" 
+                         alt="Al-Murooj Dairy Logo"
+                         onerror="this.onerror=null; this.src='images/placeholder-logo.png'; console.error('Logo loading failed');">
+                </a>
+            </div>
+            <div class="header-title">
+                <h1>Al-Murooj Dairy</h1>
+                <h2>Task Management System</h2>
+                <h3>Maintenance Department</h3>
+            </div>
+            <div class="datetime" id="datetime"></div>
+        </header>
+
+        <a href="http://localhost:3000" target="_blank" class="fab-button" title="Open in New Window">
+            <span>🔗</span>
+        </a>
+
+        <nav class="settings-bar">
+            <select id="centerSelect">
+                <option value="all">All Centers</option>
+                <option value="ghado">Ghado Center</option>
+                <option value="zeek">Zeek Center</option>
+                <option value="hajeef">Hajeef Center</option>
+            </select>
+            <button id="themeToggle" title="Toggle Theme">🌓</button>
+        </nav>
+
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" id="searchTasks" placeholder="Search tasks...">
+                <button class="search-icon">🔍</button>
+            </div>
+            <select id="sortTasks">
+                <option value="date-asc">Oldest First</option>
+                <option value="date-desc">Newest First</option>
+                <option value="priority">By Priority</option>
+            </select>
+            <select id="statusFilter">
+                <option value="all">All Tasks</option>
+                <option value="pending">Pending Tasks</option>
+                <option value="progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+            <select id="periodFilter">
+                <option value="all">All Time</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+
+        <div class="task-input">
+            <div class="quick-templates">
+                <button class="template-btn" data-template="maintenance">🔧 Routine Maintenance</button>
+                <button class="template-btn" data-template="inspection">🔍 Equipment Inspection</button>
+                <button class="template-btn" data-template="cleaning">🧹 Cleaning</button>
+            </div>
+            <input type="text" id="taskTitle" placeholder="Task Title">
+            <textarea id="taskDescription" placeholder="Task Details"></textarea>
+            <div class="input-group">
+                <div class="date-input">
+                    <input type="date" id="taskDate">
+                    <button class="date-icon" title="Select Date">📅</button>
+                </div>
+                <select id="taskPriority">
+                    <option value="low">Low Priority</option>
+                    <option value="medium" selected>Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+            </div>
+            <div class="tags-input">
+                <input type="text" id="taskTags" placeholder="Add tags (Press Enter to add)">
+                <div class="tags-container"></div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <button id="addTask">✚ Add Task</button>
+            <button id="toggleTasks">📋 Show/Hide Tasks</button>
+            <button id="export">📥 Export</button>
+            <button id="statistics">📊 Statistics</button>
+            <button id="print">🖨️ Print</button>
+            <button id="backup">💾 Backup</button>
+            <button id="restore">📂 Restore</button>
+        </div>
+
+        <div id="taskList" class="task-list"></div>
+    </div>
+
+    <!-- Add login script before other scripts -->
+    <script>
+        function checkLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'admin') {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        document.getElementById('loginBtn').addEventListener('click', checkLogin);
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginModal').style.display !== 'none') {
+                checkLogin();
+            }
+        });
+    </script>
+
+    <!-- Add script error handling -->
+    <script>
+        window.onerror = function(msg, url, line) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = `Error: ${msg} (Line: ${line})`;
+            return false;
+        };
+    </script>
+    
+    <!-- Load main script with error handling -->
+    <script src="script.js" onerror="document.getElementById('errorMessage').innerHTML='Failed to load script.js'"></script>
+</body>
+</html>
